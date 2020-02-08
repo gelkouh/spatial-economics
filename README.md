@@ -1,2 +1,2 @@
 # spatial-economics
-Oeconomica's Spatial Economics Cohort, 2019–2020
+The home of all code for the Oeconomica Spatial Economics cohort for 2019–2020.
