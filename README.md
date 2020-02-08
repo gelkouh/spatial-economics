@@ -1,11 +1,6 @@
 # spatial-economics
 The home of all code for the Oeconomica Spatial Economics cohort for 2019–2020.
 
-# Setting up your R project
-Go to the Google Drive folder on your computer. Create a new folder and call it Code for Cohort Research Paper
-
-
-
 # Data managment and setting up your R project
 All data used in this project will be kept in a Google Drive folder. Please make sure you sync this Google Drive folder (`Spatial Economics Cohort (Shared Folder)`) to your computer.
 
