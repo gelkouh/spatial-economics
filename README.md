@@ -8,7 +8,7 @@ Now, go the the `spatial-economics` folder that downloaded when you forked this 
 - Open RStudio, and create a new project (specifically, create a new directory)
   - Name the new directory `spatial-economics`
   - Create the project as a subdirectory of the `spatial-economics` folder we already have downloaded
-  - Do not check "Create a git repository"
+  - Make sure "Create a git repository" is not checked
 - In your new R project, create a file called: `data.R`
   - In this file, put the line of code equivalent to: `ddir <- "/Users/gelkouh/Google Drive (UChicago)/Spatial Economics Cohort (Shared Folder)/Cohort Research Paper/Data"` 
   - (note: you may need to begin the file path in your code with "C:" if you are not using a Mac)
