@@ -14,6 +14,6 @@ Now, go the the `spatial-economics` folder that downloaded when you forked this 
   - (note: you may need to begin the file path in your code with "C:" if you are not using a Mac)
   - Save it in the same folder as the project your just created
   
-This will allow us to write code that is system agnostic: in other words it can call a standard file (`data.R`) that we will have on all our machines and then we will have an object called ddir in our R environment which can be used to tell our computer where to look for data. 
+The `data.R` file will allow us to write code that is system agnostic: in other words it can call a standard file (`data.R`) that we will have on all our machines and then we will have an object called ddir in our R environment which can be used to tell our computer where to look for data. 
 
 (thank you to ekarsten for some of this)
