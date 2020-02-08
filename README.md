@@ -12,4 +12,4 @@ In this file, put the line of code equivalent to: ddir <- "/Users/gelkouh/Google
   
 This will allow us to write code that is system agnostic: in other words it can call a standard file (data.R) that we will have on all our machines and then we will have an object called ddir in our R environment which can be used to tell our computer where to look for data. 
 
-(thank you, in part, to ekarsten for this)
+(thank you to ekarsten for most of this)
