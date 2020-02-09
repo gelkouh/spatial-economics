@@ -17,4 +17,4 @@ We are now going to do a couple things to set up GitHub with R:
 The `data.R` file will allow us to write code that is system agnostic: in other words it can call a standard file (`data.R`) that we will have on all our machines and then we will have an object called ddir in our R environment which can be used to tell our computer where to look for data. 
 
 (thank you to ekarsten for some of this)
-A line I wrote on my local computer
+check
