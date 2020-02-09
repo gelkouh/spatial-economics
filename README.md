@@ -4,7 +4,7 @@ The home of all code for the Oeconomica Spatial Economics cohort for 2019–2020
 # Data managment and setting up your R project
 All data used in this project will be kept in a Google Drive folder. Please make sure you sync this Google Drive folder (`Spatial Economics Cohort (Shared Folder)`) to your computer.
 
-Now, go the the `spatial-economics` folder that downloaded when you forked this repository (the file you are reading is in this folder). In this folder, do the following:
+We are now going to do a couple things to set up GitHub with R:
 - Open RStudio, and create a new project (specifically, create a new directory)
   - Name the new directory `spatial-economics`
   - Create the project as a subdirectory of the `spatial-economics` folder we already have downloaded
