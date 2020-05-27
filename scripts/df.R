@@ -18,8 +18,6 @@ while(basename(root) != "spatial-economics") {
 source(file.path(root, "data.R"))
 
 # Leoading the packages we want
-library(tidyverse)
-library(haven) #for reading stata data
 
 #-----------------------------------
 # Loading In the Data
@@ -27,5 +25,3 @@ library(haven) #for reading stata data
 
 # General code: 
 # df <- read_XXX(file.path(ddir, "Folder", "filename.ext"))
-
-

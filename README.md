@@ -9,7 +9,7 @@ First, make sure you click the "Fork" button in the upper right corner of the Gi
 We are now going to do a couple things to set up GitHub with R:
 - Open RStudio, and create a new project
   - Select "Version Control" and "Git"
-  - Click the green "Clone or download" button on the GitHub page for this repository, and copy and paste the URL of the repository into the space in RStudio 
+  - Click the green "Clone or download" for the repository, and copy and paste the URL of the repository into the space in RStudio 
   - Name the new directory `spatial-economics`
   - Choose to make it a subdirectory of a location you will easily find on your computer (perhaps your desktop or in your Google Drive folder; you can pick anywhere other than our cohort's shared Google Drive folder!)
 - In your new R project, create a file called: `data.R`
