@@ -165,7 +165,7 @@ panel_df$YEAR <- as.factor(panel_df$YEAR)
 #write.csv(panel_df,file.path(ddir,"Analysis Files", "panel.csv"), row.names = FALSE)
 
 # This removes all objects from the environment except for our panel_df we just made
-rm(list=setdiff(ls(), "panel_df"))
+#rm(list=setdiff(ls(), "panel_df"))
 
 #-----------------------------------
 # Analysis
@@ -185,3 +185,12 @@ lm_fixed <- plm(Wage_and_salary_employment.Number_of_jobs ~ PERCENT_COUNTY_BURNE
                  data = panel_df, index = c("COUNTY", "YEAR"), model = "within",effect = "twoways")
 coeftest(lm_fixed, vcov = vcovHC, type = "HC1") # see textbook about this
 summary(lm_fixed)
+
+# do a regression/graph that shows length of fire vs. percentage of zip code burned by fire...
+# look up how to do graphs with panel data
+
+# Push everything to GitHub when done:
+# git add scripts
+# git commit -m "scripts"
+# git push
+
