@@ -4,6 +4,8 @@ The home of all code for the Oeconomica Spatial Economics cohort for 2019–2020
 # Data managment and setting up your R project
 All data used in this project will be kept in a shared Google Drive folder. Please make sure you sync this Google Drive folder (`Spatial Economics Cohort (Shared Folder)`) to your computer.
 
+If you cannot sync the Google Drive folder, or if you want to explore this project and were not part of the cohort, the data is available for download here: https://drive.google.com/file/d/1KuGNe5OkWm5ITNyqeiE4iHAYUZVY0G57/view?usp=sharing. Adjust the following steps regarding setting up the `data.R` file to reflect the file path to that of the downloaded, unzipped data folder (warning: it is somewhat large).
+
 First, make sure you click the "Fork" button in the upper right corner of the GitHub page for this repository.
 
 We are now going to do a couple things to set up GitHub with R:
