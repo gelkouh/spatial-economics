@@ -168,7 +168,7 @@ panel_df$YEAR <- as.factor(panel_df$YEAR)
 #rm(list=setdiff(ls(), "panel_df"))
 
 #-----------------------------------
-# Analysis
+# Data Exploration and Analysis
 #-----------------------------------
 
 # Here are some of the more likely variables that can be copied and pasted to save time:
@@ -178,18 +178,41 @@ panel_df$YEAR <- as.factor(panel_df$YEAR)
 # Average_nonfarm_proprietors_income.Dollars Average_wages_and_salaries.Dollars Employer_contributions_for_employee_pension_and_insurance_funds_5.Thousands_of_dollars
 # Dividends_interest_and_rent_2.Thousands_of_dollars
 
+p_zillow <- ggplot(filter(panel_df,PERCENT_COUNTY_BURNED_WEIGHTED!=0), aes(x = PERCENT_COUNTY_BURNED_WEIGHTED, y = ZILLOW_FOR_SALE_LISTINGS_QUANTITY_DEC31)) + 
+  geom_point()
+p_average_inc <- ggplot(filter(panel_df,PERCENT_COUNTY_BURNED_WEIGHTED!=0), aes(x = PERCENT_COUNTY_BURNED_WEIGHTED, y = Average_earnings_per_job_dollars.Dollars)) + 
+  geom_point()
+p_insurance <- ggplot(filter(panel_df,PERCENT_COUNTY_BURNED_WEIGHTED!=0), aes(x = PERCENT_COUNTY_BURNED_WEIGHTED, y = Employer_contributions_for_employee_pension_and_insurance_funds_5.Thousands_of_dollars)) + 
+  geom_point()
+p_number_jobs <- ggplot(filter(panel_df,PERCENT_COUNTY_BURNED_WEIGHTED!=0), aes(x = PERCENT_COUNTY_BURNED_WEIGHTED, y = Wage_and_salary_employment.Number_of_jobs)) + 
+  geom_point()
+p_sierra_time <- ggplot(filter(panel_df,COUNTY=="Sierra"), aes(x = YEAR, y = Average_earnings_per_job_dollars.Dollars)) + 
+  geom_point(color="red") # 19 percent of county burned in 1994
+p_san_bernardino_time <- ggplot(filter(panel_df,COUNTY=="San Bernardino"), aes(x = YEAR, y = Average_wages_and_salaries.Dollars)) + 
+  geom_point(color="red") # 8 percent of county in 2003
+p_salary_number_jobs_la <- ggplot(filter(panel_df,COUNTY=="Los Angeles"), aes(x = Wage_and_salary_employment.Number_of_jobs, y = Average_wages_and_salaries.Dollars)) + 
+  geom_point()
+p_salary_zillow_la <- ggplot(filter(panel_df,COUNTY=="Los Angeles"), aes(x = Average_wages_and_salaries.Dollars, y = ZILLOW_FOR_SALE_LISTINGS_QUANTITY_DEC31)) + 
+  geom_point()
 
-# https://www.econometrics-with-r.org/10-6-drunk-driving-laws-and-traffic-deaths.html
+fire_length_df <- county_weighted_percentage_df %>%
+  filter(!is.na(FIRE_LENGTH_DAYS))
+fire_length_lm <- lm(PERCENT_COUNTY_BURNED_WEIGHTED ~ FIRE_LENGTH_DAYS, fire_length_df)
 
-lm_fixed <- plm(Wage_and_salary_employment.Number_of_jobs ~ PERCENT_COUNTY_BURNED_WEIGHTED, 
-                 data = panel_df, index = c("COUNTY", "YEAR"), model = "within",effect = "twoways")
-coeftest(lm_fixed, vcov = vcovHC, type = "HC1") # see textbook about this
-summary(lm_fixed)
+lm_number_jobs_burn <- plm(Wage_and_salary_employment.Number_of_jobs ~ PERCENT_COUNTY_BURNED_WEIGHTED, 
+                data = panel_df, index = c("COUNTY", "YEAR"), model = "within",effect = "twoways")
+lm_salary_zillow <- plm(ZILLOW_FOR_SALE_LISTINGS_QUANTITY_DEC31 ~ Average_wages_and_salaries.Dollars, 
+                data = panel_df, index = c("COUNTY", "YEAR"), model = "within",effect = "twoways")
+lm_salary_number_jobs <- plm(Average_wages_and_salaries.Dollars ~ Wage_and_salary_employment.Number_of_jobs, 
+                             data = panel_df, index = c("COUNTY", "YEAR"), model = "within",effect = "twoways")
 
-# do a regression/graph that shows length of fire vs. percentage of zip code burned by fire...
-# look up how to do graphs with panel data
+#coeftest(lm_number_jobs_burn, vcov = vcovHC, type = "HC1") # see textbook about this
+
 
 # Push everything to GitHub when done:
+# Make sure working directory is set to spatial-economics (pwd)
+# git status
+# git pull
 # git add scripts
 # git commit -m "scripts"
 # git push
