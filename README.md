@@ -14,8 +14,8 @@ We are now going to do a couple things to set up GitHub with R:
   - Click the green "Clone or download" for the repository on GitHub, and copy and paste the URL of the repository into the space in RStudio 
   - Name the new directory `spatial-economics`
   - Choose to make it a subdirectory of a location you will easily find on your computer (perhaps your desktop or in your Google Drive folder; you can pick anywhere other than our cohort's shared Google Drive folder!)
-- In your new R project, create a file called: `data.R`
-  - In this file, put the line of code equivalent to: `ddir <- "/Users/gelkouh/Google Drive (UChicago)/Spatial Economics Cohort (Shared Folder)/Cohort Research Paper/Data"` 
+- In your new R project, locate the file called: `data.R`
+  - In this file, change the following line of code to reflect the path to the Data folder on your computer (if you downloaded the Data via the ZIP file link above, then this folder is just the unzipped Data folder from the download): `ddir <- "/Users/gelkouh/Google Drive (UChicago)/Spatial Economics Cohort (Shared Folder)/Cohort Research Paper/Data"` 
   - (note: you may need to begin the file path in your code with `C:` if you are not using a Mac)
   - Save it in the `spatial-economics` folder that your R project is in
 
