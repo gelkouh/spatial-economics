@@ -269,6 +269,10 @@ lm_average_inc <- plm(Average_earnings_per_job_dollars.Dollars ~ PERCENT_COUNTY_
                       data = panel_df, index = c("COUNTY", "YEAR"), model = "within",effect = "twoways")
 lm_zillow <- plm(ZILLOW_FOR_SALE_LISTINGS_QUANTITY_DEC31 ~ PERCENT_COUNTY_BURNED_WEIGHTED, 
                  data = panel_df, index = c("COUNTY", "YEAR"), model = "within",effect = "twoways")
+lm_farmjobsnum <- plm(Farm_proprietors_employment_6.Number_of_jobs ~ PERCENT_COUNTY_BURNED_WEIGHTED, 
+               data = panel_df, index = c("COUNTY", "YEAR"), model = "within",effect = "twoways")
+lm_farminc <- plm(Farm_proprietors_income.Thousands_of_dollars ~ PERCENT_COUNTY_BURNED_WEIGHTED, 
+                  data = panel_df, index = c("COUNTY", "YEAR"), model = "within",effect = "twoways")
 
 lm_salary_zillow <- plm(ZILLOW_FOR_SALE_LISTINGS_QUANTITY_DEC31 ~ Average_wages_and_salaries.Dollars, 
                 data = panel_df, index = c("COUNTY", "YEAR"), model = "within",effect = "twoways")
@@ -297,6 +301,14 @@ stargazer(lm_salary_number_jobs,lm_salary_zillow,
           title = "Linear Panel Regression Models between Economic Indicators and Zillow Housing Data",
           model.numbers = FALSE,
           column.labels = c("Number of Wage and Salary Jobs", "Year-End Zillow For-Sale Listings Quantity"))
+
+stargazer(lm_farmjobsnum,lm_farminc,
+          digits = 3,
+          header = FALSE,
+          type = "latex", 
+          title = "Linear Panel Regression Models of Farming Economic Indicators Against Forest Fire Extent",
+          model.numbers = FALSE,
+          column.labels = c("Number of Farm Proprietor Jobs", "Farm Proprietor's Income (Thousands of $)"))
 
 # Plots and figures to export
 #mean_percent_map
