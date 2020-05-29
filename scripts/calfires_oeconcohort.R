@@ -1,5 +1,8 @@
 # Spatial Economics Cohort Final Paper
 
+# Everything your need to run this code (data and detailed instructions) is here:
+# https://github.com/gelkouh/spatial-economics
+
 # This snippet of code is a little loop that makes my code work on your computer
 root <- getwd()
 while(basename(root) != "spatial-economics") { # this is the name of your project directory you want to use
@@ -203,7 +206,7 @@ panel_df$YEAR <- as.factor(panel_df$YEAR)
 # Average_nonfarm_proprietors_income.Dollars Average_wages_and_salaries.Dollars Employer_contributions_for_employee_pension_and_insurance_funds_5.Thousands_of_dollars
 # Dividends_interest_and_rent_2.Thousands_of_dollars
 
-# Map of the average percent of each county burned in each fire
+# Maps of the average percent of each county burned in each fire and county populations
 mean_percent_df <- weighted_county_percent %>%
   group_by(COUNTY) %>%
   summarise(MEAN_PERCENT_COUNTY_BURNED_PER_FIRE = mean(PERCENT_COUNTY_BURNED_WEIGHTED))
@@ -218,20 +221,31 @@ pop_map <- tm_shape(counties_shapes) + tm_fill("COUNTY_POP",
                                                         style="quantile",
                                                         title = "Population per County")
 
-
 # Plots exploring various relationships in the data
 p_zillow <- ggplot(filter(panel_df,PERCENT_COUNTY_BURNED_WEIGHTED!=0), aes(x = PERCENT_COUNTY_BURNED_WEIGHTED, y = ZILLOW_FOR_SALE_LISTINGS_QUANTITY_DEC31)) + 
-  geom_point()
+  geom_point() +
+  xlab("Weighted Percent County Burned") +
+  ylab("Year-End Zillow For-Sale Listings Quantity") +
+  ggtitle("All Counties by Year")
 p_average_inc <- ggplot(filter(panel_df,PERCENT_COUNTY_BURNED_WEIGHTED!=0), aes(x = PERCENT_COUNTY_BURNED_WEIGHTED, y = Average_earnings_per_job_dollars.Dollars)) + 
-  geom_point()
+  geom_point() +
+  xlab("Weighted Percent County Burned") +
+  ylab("Average Earnings per Job ($)") +
+  ggtitle("All Counties by Year")
 p_insurance <- ggplot(filter(panel_df,PERCENT_COUNTY_BURNED_WEIGHTED!=0), aes(x = PERCENT_COUNTY_BURNED_WEIGHTED, y = Employer_contributions_for_employee_pension_and_insurance_funds_5.Thousands_of_dollars)) + 
   geom_point()
 p_number_jobs <- ggplot(filter(panel_df,PERCENT_COUNTY_BURNED_WEIGHTED!=0), aes(x = PERCENT_COUNTY_BURNED_WEIGHTED, y = Wage_and_salary_employment.Number_of_jobs)) + 
   geom_point()
-p_sierra_time <- ggplot(filter(panel_df,COUNTY=="Sierra"), aes(x = YEAR, y = Average_earnings_per_job_dollars.Dollars)) + 
-  geom_point(color="red") # 19 percent of county burned in 1994
-p_san_bernardino_time <- ggplot(filter(panel_df,COUNTY=="San Bernardino"), aes(x = YEAR, y = Average_wages_and_salaries.Dollars)) + 
-  geom_point(color="red") # 8 percent of county in 2003
+p_sierra_time <- ggplot(filter(panel_df,COUNTY=="Sierra"), aes(x = YEAR, y = Wage_and_salary_employment.Number_of_jobs)) + 
+  geom_point() +
+  xlab("Year") +
+  ylab("Number of Wage and Salary Jobs") +
+  ggtitle("Sierra County (19 percent (weighted) of county burned in 1994)")
+p_san_bernardino_time <- ggplot(filter(panel_df,COUNTY=="San Bernardino"), aes(x = YEAR, y = Wage_and_salary_employment.Number_of_jobs)) + 
+  geom_point() +
+  xlab("Year") +
+  ylab("Number of Wage and Salary Jobs") +
+  ggtitle("San Bernardino County (8 percent (weighted) of county burned in 2003)")
 p_salary_number_jobs_la <- ggplot(filter(panel_df,COUNTY=="Los Angeles"), aes(x = Wage_and_salary_employment.Number_of_jobs, y = Average_wages_and_salaries.Dollars)) + 
   geom_point()
 p_salary_zillow_la <- ggplot(filter(panel_df,COUNTY=="Los Angeles"), aes(x = Average_wages_and_salaries.Dollars, y = ZILLOW_FOR_SALE_LISTINGS_QUANTITY_DEC31)) + 
@@ -251,33 +265,53 @@ fire_length_lm <- lm(PERCENT_COUNTY_BURNED_WEIGHTED ~ FIRE_LENGTH_DAYS, fire_len
 # Fixed effects regressions testing relationships within the data
 lm_number_jobs_burn <- plm(Wage_and_salary_employment.Number_of_jobs ~ PERCENT_COUNTY_BURNED_WEIGHTED, 
                 data = panel_df, index = c("COUNTY", "YEAR"), model = "within",effect = "twoways")
+lm_average_inc <- plm(Average_earnings_per_job_dollars.Dollars ~ PERCENT_COUNTY_BURNED_WEIGHTED, 
+                      data = panel_df, index = c("COUNTY", "YEAR"), model = "within",effect = "twoways")
+lm_zillow <- plm(ZILLOW_FOR_SALE_LISTINGS_QUANTITY_DEC31 ~ PERCENT_COUNTY_BURNED_WEIGHTED, 
+                 data = panel_df, index = c("COUNTY", "YEAR"), model = "within",effect = "twoways")
+
 lm_salary_zillow <- plm(ZILLOW_FOR_SALE_LISTINGS_QUANTITY_DEC31 ~ Average_wages_and_salaries.Dollars, 
                 data = panel_df, index = c("COUNTY", "YEAR"), model = "within",effect = "twoways")
-lm_salary_number_jobs <- plm(Average_wages_and_salaries.Dollars ~ Wage_and_salary_employment.Number_of_jobs, 
+lm_salary_number_jobs <- plm(Wage_and_salary_employment.Number_of_jobs ~ Average_wages_and_salaries.Dollars, 
                              data = panel_df, index = c("COUNTY", "YEAR"), model = "within",effect = "twoways")
 
 # LaTeX regression tables for output
-stargazer(fatalities_mod1, fatalities_mod2, fatalities_mod3, 
-          fatalities_mod4, fatalities_mod5, fatalities_mod6, fatalities_mod7, 
+stargazer(lm_number_jobs_burn, lm_average_inc, lm_zillow,
           digits = 3,
           header = FALSE,
           type = "latex", 
-          se = rob_se,
-          title = "Linear Panel Regression Models of Traffic Fatalities due to Drunk Driving",
+          title = "Linear Panel Regression Models of Economic Indicators Against Weighted Percent of County Burned",
           model.numbers = FALSE,
-          column.labels = c("(1)", "(2)", "(3)", "(4)", "(5)", "(6)", "(7)"))
+          column.labels = c("Number of Wage and Salary Jobs", "Average Earnings per Job ($)", "Year-End Zillow For-Sale Listings Quantity"))
+
+stargazer(fire_length_lm,
+          digits = 3,
+          header = FALSE,
+          type = "latex", 
+          model.numbers = FALSE)
+
+stargazer(lm_salary_number_jobs,lm_salary_zillow,
+          digits = 3,
+          header = FALSE,
+          type = "latex", 
+          title = "Linear Panel Regression Models between Economic Indicators and Zillow Housing Data",
+          model.numbers = FALSE,
+          column.labels = c("Number of Wage and Salary Jobs", "Year-End Zillow For-Sale Listings Quantity"))
 
 # Plots and figures to export
 #mean_percent_map
 #pop_map
 #gridExtra::grid.arrange(p_salary_zillow_la, p_YEAR_zillow_la, ncol=2)
+#gridExtra::grid.arrange(p_san_bernardino_time, p_sierra_time, ncol=1)
+#p_zillow
+#p_average_inc
 
 
 # Push everything to GitHub when done:
 # Make sure working directory is set to spatial-economics (pwd)
 # git status
 # git pull
-# git add scripts
+# git add [file.extension or folder]
 # git commit -m "scripts"
 # git push
 

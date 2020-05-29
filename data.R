@@ -1,1 +1,2 @@
 ddir <- "/Users/gelkouh/Google Drive (UChicago)/Spatial Economics Cohort (Shared Folder)/Cohort Research Paper/Data"
+# Change this file path to reflect the file path to where the `Data` folder for this project is stored on your machine
