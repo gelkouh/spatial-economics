@@ -1,5 +1,5 @@
 # spatial-economics
-The home of all code for the Oeconomica Spatial Economics cohort for 2019–2020. Note: the final paper is in the `docs` folder.
+The home of all code for the Oeconomica Spatial Economics cohort for 2019–2020. Note: a rough draft of the final paper is in the `docs` folder.
 
 # Data managment and setting up your R project
 All data used in this project will be kept in a shared Google Drive folder. Please make sure you sync this Google Drive folder (`Spatial Economics Cohort (Shared Folder)`) to your computer.
